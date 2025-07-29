@@ -1,41 +1,46 @@
 #!/bin/bash
 
-# Uncomment the ones you want to build.
+set -e  # Exit on any error
 
-# macOS 64-bit
-# GOOS=darwin GOARCH=amd64 go build -o bin/mac/smcfix smcfix.go
-# macOS 32-bit
-# GOOS=darwin GOARCH=386 go build -o bin/mac/smcfix32 smcfix.go
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
 
-# Windows 64-bit
-# GOOS=windows GOARCH=amd64 go build -o bin/win/smcfix.exe smcfix.go
-# Windows 32-bit
-# GOOS=windows GOARCH=386 go build -o bin/win/smcfix32.exe smcfix.go
+# Function to print colored output
+print_status() {
+    echo -e "${BLUE}[INFO   ]${NC} $1"
+}
 
-# Linux 64-bit
-# GOOS=linux GOARCH=amd64 go build -o bin/linux/smcfix smcfix.go
-# Linux 32-bit
-# GOOS=linux GOARCH=386 go build -o bin/linux/smcfix32 smcfix.go
+print_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
 
+print_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
 
-# Packaging with icon
-# https://developer.fyne.io/started/packaging
-# go install fyne.io/fyne/v2/cmd/fyne@latest
-# macOS
-# fyne package -os darwin -icon assets/icon.png
-# Windows
-# fyne package -os windows -icon assets/icon.png
-# Linux
-# fyne package -os linux -icon assets/icon.png
+print_error() {
+    echo -e "${RED}[ERROR  ]${NC} $1"
+}
 
+# Main execution
+main() {
+    print_status "SMCFix Build Script"
+    print_status "==================="
+    
+    print_status "Downloading dependencies..."
+    go mod download
+    go mod tidy
 
+    print_status "Packaging..."
+    # Package directly to build directory
+    fyne package -icon assets/icon.png -name "SMCFix" -release
+    
+    print_success "Done!"
+}
 
-# macOS package in dmg
-# https://github.com/create-dmg/create-dmg
-# create-dmg \
-#  --app-drop-link 196 48 \
-#  --window-size 396 196 \
-#  --icon-size 100 \
-#  --icon "smcfix.app" 48 48 \
-#  "smcfix.dmg" \
-#  "smcfix.app"
+# Run main function
+main "$@"

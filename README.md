@@ -1,6 +1,6 @@
 SMCFIX
 
-<img alt="SMCFix icon, a SNES cart guillotine." src="https://github.com/fith/smcfix/blob/main/assets/icon.png?raw=true" width="128"/>
+<img alt="SMCFix icon, a SNES cart guillotine." src="https://github.com/jessica-industries/smcfix/blob/main/assets/icon.png?raw=true" width="128"/>
 
 Chop headers off SNES roms!
 
@@ -22,13 +22,39 @@ ROMs I found to test on.
 
 Cross-platform GUI using Fyne (https://fyne.io). I don't love it, but it's functional. I'd never used Fyne before, and I barely know Go, so if you're reviewing this: sorry about the slapdash prototype.
 
-<img alt="SMCFix icon, a SNES cart guillotine." src="https://github.com/fith/smcfix/blob/main/assets/screenshot.png?raw=true" />
+<img alt="SMCFix icon, a SNES cart guillotine." src="https://github.com/jessica-industries/smcfix/blob/main/assets/screenshot.png?raw=true" />
 
+## Download
+
+Get the latest release on the right side. Download for your platform.
+
+## Development
+
+### Prerequisites
+Install Go 1.21 or later
+https://go.dev/doc/install
+
+Install Fyne
+```
+go install fyne.io/fyne/v2/cmd/fyne@latest
+```
+
+### Manual Build
+```bash
+# Build for local platform (installs dependencies automatically)
+chmod +x build.sh
+./build.sh build
+
+# Or install dependencies only
+./build.sh deps
+```
+
+## Usage
 <h3>CLI</h3>
-<pre>
-Usage of ./smcfix:
+```bash
+Usage of smcfix:
   -dir string
-    	Directory to scan for SMC files. (default "/Users/kevin/Workspace/smcfix/bin/mac")
+    	Directory to scan for SMC files. (default current directory)
   -file string
     	Single SMC file to check and clean.
   -help
@@ -37,11 +63,11 @@ Usage of ./smcfix:
     	Specify alternate output directory.
   -overwrite
     	Overwrite or create new e.g. "[filename]-smcfix.smc" (default false)
-</pre>
+```
 
 For smcfix.app the command line utility would be run from the exacutable inside the .app package:
 
 Example:
-<pre>
-./smcfix.app/Contents/MacOS/smcfix -dir /Users/kevin/roms/snes -overwrite=true
-</pre>
+```bash
+./smcfix.app/Contents/MacOS/smcfix -dir ~/roms/snes -overwrite=true
+```
