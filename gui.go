@@ -1,6 +1,11 @@
 package main
 
 import (
+	"log"
+	"os"
+	"path/filepath"
+	"strconv"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
@@ -9,10 +14,6 @@ import (
 	"fyne.io/fyne/v2/storage"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-	"log"
-	"os"
-	"path/filepath"
-	"strconv"
 )
 
 const WINDOW_WIDTH = 800
