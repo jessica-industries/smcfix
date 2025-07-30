@@ -69,14 +69,19 @@ jobs:
 
     - name: Build binary
       run: |
-        GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o bin/${{ matrix.binary }} .
-        echo "Binary built: bin/${{ matrix.binary }}"
+        # Build full version with GUI support using Fyne
+        fyne package -os ${{ matrix.goos }} -icon assets/icon.png -name "SMCFix" -release
+        echo "GUI app built for ${{ matrix.goos }}"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: smcfix-${{ matrix.goos }}-${{ matrix.goarch }}
-        path: bin/${{ matrix.binary }}
+        path: |
+          SMCFix.app
+          SMCFix.exe
+          SMCFix
+        if-no-files-found: ignore
 
   package-macos:
     if: startsWith(github.ref, 'refs/tags/')
@@ -117,6 +122,8 @@ jobs:
 
     - name: Package macOS app
       run: |
+        # Build the full GUI version for macOS
+        go build -o bin/darwin/smcfix .
         fyne package -os darwin -icon assets/icon.png -name "SMCFix" -release
         echo "macOS app packaged: SMCFix.app"
 
